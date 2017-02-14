@@ -4,6 +4,7 @@ function preload() {
 
     game.load.image('kingcard', './assets/kingcard.png');
     game.load.image('kingcardback', './assets/kingcardback.png');
+    game.load.spritesheet('veggies', './assets/fruitnveg64wh37.png', 64, 64, 37);
 
 }
 
@@ -19,7 +20,7 @@ function create() {
     card.anchor.setTo(0.5, 0.5);
     card.scaleXOriginal = card.scale.x;
 
-    card.face = 'front';
+    card.face = 'back';
     card.flipping = false;
 
 }
@@ -33,7 +34,8 @@ function flipCard(cardToFlip) {
 		if( cardToFlip.face == "front") {
 			var tween = game.add.tween(cardToFlip.scale).to({ x: 0}, 250, Phaser.Easing.Linear.None, true);
 			tween.onComplete.add(function() { 
-				cardToFlip.loadTexture('kingcard');
+        cardToFlip.removeChildAt(0);
+				cardToFlip.loadTexture('kingcardback');
 				var secondaryTween = game.add.tween(cardToFlip.scale).to({ x: card.scaleXOriginal}, 250, Phaser.Easing.Linear.None, true);
 				secondaryTween.onComplete.add(function() {
 					cardToFlip.flipping = false;
@@ -43,7 +45,8 @@ function flipCard(cardToFlip) {
 		} else {
 			var tween = game.add.tween(cardToFlip.scale).to({ x: 0}, 250, Phaser.Easing.Linear.None, true);
 			tween.onComplete.add(function() { 
-				cardToFlip.loadTexture('kingcardback');
+				cardToFlip.loadTexture('kingcard');
+        cardToFlip.addChild(game.make.sprite(0,0, 'veggies', 17));
 				var secondaryTween = game.add.tween(cardToFlip.scale).to({ x: cardToFlip.scaleXOriginal}, 250, Phaser.Easing.Linear.None, true);
 				secondaryTween.onComplete.add(function() {
 					cardToFlip.flipping = false;
