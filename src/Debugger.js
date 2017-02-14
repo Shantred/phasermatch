@@ -59,8 +59,13 @@ Debugger = function(namespace) {
         
         // First, check if the option exists and is active
         if (!this.options.hasOwnProperty(option) && this.alwaysOn === false) {
-            // Throw an exception for missing properties
-            throw "Debugger Exception: Option '" + option + "' is undefined. All debugger options must be initialized before use.";
+            // Option isn't required if override is enabled in "always" mode
+            if (this.override === true && this.overrideMode == "always") {
+                // Do nothing
+            } else {
+                // Throw an exception for missing properties
+                throw "Debugger Exception: Option '" + option + "' is undefined. All debugger options must be initialized before use.";
+            }
         }
 
         // Now check if the option is enabled
