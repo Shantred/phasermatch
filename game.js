@@ -1,8 +1,3 @@
-// Boolean debug vars use for debugging the game from all states
-var debug = {
-    cardAnims : false,
-};
-
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create });
 
 function preload() {
