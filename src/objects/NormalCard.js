@@ -1,7 +1,12 @@
-NormalCard = function(game, x, y, cardBack, cardFront) {
+NormalCard = function(game, x, y, cardBack, cardFront, veggieIndex) {
     BaseCard.call(this, game, x, y, cardBack, cardFront);
 
     //this.parent = this;
+    this.props.veggieIndex = veggieIndex;
+
+    // The card identifier is what allows us to tell if two cards match.
+    // The identifier is simply <card_type>_<faceID> Ex: Normal_17
+    this.identifier = "Normal_" + veggieIndex;
 
     // Setup debugger
     this.debug = new Debugger("NormalCard");
@@ -12,13 +17,7 @@ NormalCard = function(game, x, y, cardBack, cardFront) {
 
     this.flip = function() {
         var _this = this;
-
-        this.debug.log("cardAnims", "flip", "Context of this before flip: ", BaseCard.prototype);
-        BaseCard.prototype.flip(this, function() {
-          _this.removeChildAt(0);
-        }, function() {
-            //
-        });
+        BaseCard.prototype.flip(this);
     };
 
     this.flipToFront = function() {

@@ -28,8 +28,6 @@ BaseCard.prototype.flip = function(card) {
 
     // For the base card, simply execute the flip animation
     if (!card.props.isFlipping) {
-        card.props.isFlipping = true;
-
         card.debug.log("cardAnims", "flip", "Beginning flip: ", card);
 
         // For the flip animation, shrink the scale of x until 0, switch the sprite texture
@@ -43,9 +41,9 @@ BaseCard.prototype.flip = function(card) {
 }
 
 BaseCard.prototype.flipToBack = function(_this, shrinkCallback, expandCallback) {
-
     // When flipping front-back we need to remove the child sprites once the
     // scaling has gone to 0
+    _this.props.isFlipping = true;
     var shrinkTween = game.add.tween(_this.scale).to(
         {x : 0},
         _this.props.flipSpeed / 2,
@@ -72,15 +70,21 @@ BaseCard.prototype.flipToBack = function(_this, shrinkCallback, expandCallback) 
             expandCallback.call();
             _this.props.isFlipping = false;
             _this.props.currentFace = "back";
+            gameManager.cardsSelected--;
         });
     });
 }
 
 BaseCard.prototype.flipToFront = function(_this, shrinkCallback, expandCallback) {
+    if (gameManager.cardsSelected >= 2)
+        return;
+
+    gameManager.cardsSelected++;
     _this.debug.log("cardAnims", "flipToFront", "Pre-tween context: ", _this);
 
     // When flipping back-front, we need to be sure to add the card face sprite
     // as a child to the card blank when we are done scaling to 0
+    _this.props.isFlipping = true;
     var shrinkTween = game.add.tween(_this.scale).to(
         {x : 0},
         _this.props.flipSpeed / 2,
