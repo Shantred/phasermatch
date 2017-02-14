@@ -5,6 +5,8 @@ BaseCard = function(game, x, y, cardBack, cardFront) {
 
     this.props = {
         originalScale : this.scale.x,
+        cardFront     : cardFront,
+        cardBack      : cardBack,
         currentFace   : "back",
         isFlipping    : false,
         flipSpeed     : 500 // Time in ms, split between shrink and expand tween
@@ -17,86 +19,13 @@ BaseCard = function(game, x, y, cardBack, cardFront) {
         miscDebug: false
     });
 
-    // Class Methods    
-    this.flipToFront = function() {
-        var _this = this; // Will always reference BaseCard
-        this.debug.log("cardAnims", "flipToFront", "Pre-tween context: ", _this);
-
-        // When flipping back-front, we need to be sure to add the card face sprite
-        // as a child to the card blank when we are done scaling to 0
-        var shrinkTween = game.add.tween(_this.scale).to(
-            {x : 0},
-            _this.props.flipSpeed / 2,
-            Phaser.Easing.Linear.None,
-            true
-        );
-        shrinkTween.onComplete.add(function() {
-            _this.debug.log("cardAnims", "flipToFront", "Mid-tween context: ", _this);
-            _this.loadTexture(cardFront);
-
-            // Placeholder as proof of concept for now
-            _this.addChild(game.make.sprite(0,0, 'veggies', 17));
-
-            // Begin the next tween
-            var expandTween = game.add.tween(_this.scale).to(
-                {x: _this.props.originalScale},
-                _this.props.flipSpeed / 2,
-                Phaser.Easing.Linear.None,
-                true
-            );
-
-            // When done, allow flipping again and set face to correct state
-            expandTween.onComplete.add(function() {
-                _this.props.isFlipping = false;
-                _this.props.currentFace = "front";
-            });
-        });
-    }
-
-    this.flipToBack = function() {
-        var _this = this; // Will always reference BaseCard
-
-        // When flipping front-back we need to remove the child sprites once the
-        // scaling has gone to 0
-        var shrinkTween = game.add.tween(_this.scale).to(
-            {x : 0},
-            _this.props.flipSpeed / 2,
-            Phaser.Easing.Linear.None,
-            true
-        );
-        shrinkTween.onComplete.add(function() {
-
-            // _This primitive base class only has one child sprite, but will be expanded
-            // upon later and _this will need to be refactored
-            _this.removeChildAt(0);
-            _this.loadTexture(cardBack);
-
-            // Begin the next tween
-            var expandTween = game.add.tween(_this.scale).to(
-                {x: _this.props.originalScale},
-                _this.props.flipSpeed / 2,
-                Phaser.Easing.Linear.None,
-                true
-            );
-
-            // When done, allow flipping again and set face to correct state
-            expandTween.onComplete.add(function() {
-                _this.props.isFlipping = false;
-                _this.props.currentFace = "back";
-            });
-        });
-    }
-
-    // Events
-    //this.events.onInputDown.add(this.flip, this);
-
     game.add.existing(this);
 };
 
 BaseCard.prototype = Object.create(Phaser.Sprite.prototype);
 BaseCard.prototype.constructor = BaseCard;
 BaseCard.prototype.flip = function(card) {
-    card.debug.log("cardAnims", "flip", "Context pre-flip: ", card);
+
     // For the base card, simply execute the flip animation
     if (!card.props.isFlipping) {
         card.props.isFlipping = true;
@@ -111,4 +40,73 @@ BaseCard.prototype.flip = function(card) {
         if (card.props.currentFace == "back")
             card.flipToFront();
     }
+}
+
+BaseCard.prototype.flipToBack = function(_this, shrinkCallback, expandCallback) {
+
+    // When flipping front-back we need to remove the child sprites once the
+    // scaling has gone to 0
+    var shrinkTween = game.add.tween(_this.scale).to(
+        {x : 0},
+        _this.props.flipSpeed / 2,
+        Phaser.Easing.Linear.None,
+        true
+    );
+    shrinkTween.onComplete.add(function() {
+
+        // _This primitive base class only has one child sprite, but will be expanded
+        // upon later and _this will need to be refactored
+        shrinkCallback.call();
+        _this.loadTexture(_this.props.cardBack);
+
+        // Begin the next tween
+        var expandTween = game.add.tween(_this.scale).to(
+            {x: _this.props.originalScale},
+            _this.props.flipSpeed / 2,
+            Phaser.Easing.Linear.None,
+            true
+        );
+
+        // When done, allow flipping again and set face to correct state
+        expandTween.onComplete.add(function() {
+            expandCallback.call();
+            _this.props.isFlipping = false;
+            _this.props.currentFace = "back";
+        });
+    });
+}
+
+BaseCard.prototype.flipToFront = function(_this, shrinkCallback, expandCallback) {
+    _this.debug.log("cardAnims", "flipToFront", "Pre-tween context: ", _this);
+
+    // When flipping back-front, we need to be sure to add the card face sprite
+    // as a child to the card blank when we are done scaling to 0
+    var shrinkTween = game.add.tween(_this.scale).to(
+        {x : 0},
+        _this.props.flipSpeed / 2,
+        Phaser.Easing.Linear.None,
+        true
+    );
+    shrinkTween.onComplete.add(function() {
+        _this.debug.log("cardAnims", "flipToFront", "Mid-tween context: ", _this);
+        _this.loadTexture(_this.props.cardFront);
+
+        // Placeholder as proof of concept for now
+        //_this.addChild(game.make.sprite(0,0, 'veggies', 17));
+        shrinkCallback.call();
+
+        // Begin the next tween
+        var expandTween = game.add.tween(_this.scale).to(
+            {x: _this.props.originalScale},
+            _this.props.flipSpeed / 2,
+            Phaser.Easing.Linear.None,
+            true
+        );
+
+        // When done, allow flipping again and set face to correct state
+        expandTween.onComplete.add(function() {
+            _this.props.isFlipping = false;
+            _this.props.currentFace = "front";
+        });
+    });
 }
