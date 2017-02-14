@@ -50,7 +50,8 @@ Debugger = function(namespace) {
      *   mode set to ignore.
      * Otherwise, it will check the options object for values. You can temporarily bypass
      *   this check by either changing the setting directly or using toggleOverride with
-     *   the default mode "always" and toggling again when done.
+     *   the default mode "always" and toggling again when done. When using toggleOverride,
+     *   the option parameter may be left null
      */
     this.log = function(option, method) {
         // Debugging the debugger
