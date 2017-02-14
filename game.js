@@ -10,9 +10,24 @@ function preload() {
 
 function create() {
 
-    // Create demo card
-    card = new BaseCard(game, 150, 150, 'kingcardback', 'kingcard');
+    // Place cards in a 2x4 grid
+    var posXBase = 100;
+    var posYBase = 150;
+    var posX = posXBase;
+    var posY = posYBase;
 
+    var maxCards = 8;
+    for (var i = 0; i < maxCards; i++) {
+        // Make sure the card fits on the screen width-wise. Cards are 131 pixels wide
+        if (posX + 131 >= 800 - 131) {
+            posX = posXBase;
+            posY += 192 + 50;
+        }
+
+        new BaseCard(game, posX, posY, 'kingcardback', 'kingcard');
+
+        posX += 131;
+    }
 }
 
 function update() {
