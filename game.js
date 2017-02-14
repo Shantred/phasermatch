@@ -24,7 +24,7 @@ function create() {
             posY += 192 + 50;
         }
 
-        new BaseCard(game, posX, posY, 'kingcardback', 'kingcard');
+        new NormalCard(game, posX, posY, 'kingcardback', 'kingcard');
 
         posX += 131;
     }

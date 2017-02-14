@@ -1,4 +1,4 @@
-BaseCard = function (game, x, y, cardBack, cardFront) {
+BaseCard = function(game, x, y, cardBack, cardFront) {
     Phaser.Sprite.call(this, game, x, y, cardBack);
     this.anchor.setTo(0.5, 0.5);
     this.inputEnabled = true;
@@ -17,24 +17,7 @@ BaseCard = function (game, x, y, cardBack, cardFront) {
         miscDebug: false
     });
 
-    // Class Methods
-    this.flip = function() {
-        // For the base card, simply execute the flip animation
-        if (!this.props.isFlipping) {
-            this.props.isFlipping = true;
-
-            this.debug.log("cardAnims", "flip", "Beginning flip: ", this);
-
-            // For the flip animation, shrink the scale of x until 0, switch the sprite texture
-            // and then expand it back out to the original scale.
-            if (this.props.currentFace == "front")
-                this.flipToBack();
-
-            if (this.props.currentFace == "back")
-                this.flipToFront();
-        }
-    };
-    
+    // Class Methods    
     this.flipToFront = function() {
         var _this = this; // Will always reference BaseCard
         this.debug.log("cardAnims", "flipToFront", "Pre-tween context: ", _this);
@@ -105,10 +88,27 @@ BaseCard = function (game, x, y, cardBack, cardFront) {
     }
 
     // Events
-    this.events.onInputDown.add(this.flip, this);
+    //this.events.onInputDown.add(this.flip, this);
 
     game.add.existing(this);
 };
 
 BaseCard.prototype = Object.create(Phaser.Sprite.prototype);
 BaseCard.prototype.constructor = BaseCard;
+BaseCard.prototype.flip = function(card) {
+    card.debug.log("cardAnims", "flip", "Context pre-flip: ", card);
+    // For the base card, simply execute the flip animation
+    if (!card.props.isFlipping) {
+        card.props.isFlipping = true;
+
+        card.debug.log("cardAnims", "flip", "Beginning flip: ", card);
+
+        // For the flip animation, shrink the scale of x until 0, switch the sprite texture
+        // and then expand it back out to the original scale.
+        if (card.props.currentFace == "front")
+            card.flipToBack();
+
+        if (card.props.currentFace == "back")
+            card.flipToFront();
+    }
+}
