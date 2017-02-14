@@ -4,13 +4,14 @@ BaseCard = function(game, x, y, cardBack, cardFront) {
     this.inputEnabled = true;
 
     this.props = {
-        originalScale : this.scale.x,
-        cardFront     : cardFront,
-        cardBack      : cardBack,
-        currentFace   : "back",
-        isFlipping    : false,
-        flipSpeed     : 500, // Time in ms, split between shrink and expand tween,
-        gmPointer     : null
+        originalScale  : this.scale.x,
+        cardFront      : cardFront,
+        cardBack       : cardBack,
+        currentFace    : "back",
+        isFlipping     : false,
+        flipSpeed      : 500, // Time in ms, split between shrink and expand tween,
+        gmPointer      : null,
+        isInteractable : true,
     };
 
     // Setup debugger
@@ -28,7 +29,7 @@ BaseCard.prototype.constructor = BaseCard;
 BaseCard.prototype.flip = function(card) {
 
     // For the base card, simply execute the flip animation
-    if (!card.props.isFlipping) {
+    if (!card.props.isFlipping && card.props.isInteractable) {
         card.debug.log("cardAnims", "flip", "Beginning flip: ", card);
 
         // For the flip animation, shrink the scale of x until 0, switch the sprite texture
@@ -123,4 +124,19 @@ BaseCard.prototype.flipToFront = function(_this, shrinkCallback, expandCallback)
             }
         });
     });
+}
+
+BaseCard.prototype.disable = function(_this, callback) {
+    // For now, when disabling a matched card just set isInteractable = false
+    // and then lower the opacity
+    _this.props.isInteractable = false;
+    _this.alpha = 0.5;
+    _this.props.gmPointer = null;
+    callback.call();
+}
+
+BaseCard.prototype.enable = function(_this, callback) {
+    _this.props.isInteractable = true;
+    _this.alpha = 1;
+    callback.call();
 }

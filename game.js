@@ -11,17 +11,5 @@ function preload() {
 }
 
 function create() {
-
     game.state.start('play');
-}
-
-function update() {
-    // console.log("performing update");
-    // // Check for a flip with matched cards
-    // if (gameManager.cardsSelected == 2 && !gameManager.checkingMatch) {
-    //     console.log("Checking for a match");
-    //     checkMatches();
-    // } else {
-    //   console.log("Failed to check match: " + gameManager.cardsSelected + " checkingMatch: "  + gameManager.checkingMatch);
-    // }
 }

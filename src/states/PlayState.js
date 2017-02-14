@@ -28,7 +28,7 @@ PlayState.prototype.create = function() {
 
 PlayState.prototype.update = function() {
     // Check for a flip with matched cards
-    if (gameManager.cardsSelected == 2 && !gameManager.checkingMatch) {
+    if (gameManager.cardsSelected == 2 && !gameManager.checkingMatch && gameManager.cardOne !== null && gameManager.cardTwo !== null) {
         console.log("Checking for a match");
         gameManager.checkMatches();
     }
