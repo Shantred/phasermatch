@@ -6,16 +6,8 @@
     <script src="phaser.min.js"></script>
     <!-- load game objects before the game logic itself -->
     <script src="./src/Debugger.js"></script>
-    <script type="text/javascript">
-    // To be moved to the game manager class later
-var gameManager = {
-    cardsSelected: 0,
-    matchesComplete: 0,
-    cardOne : null,
-    cardTwo : null,
-
-}
-</script>
+    <script src="./src/GameManager.js"></script>
+    <script src="./src/states/PlayState.js"></script>
     <script src="./src/objects/BaseCard.js"></script>
     <script src="./src/objects/NormalCard.js"></script>
     <script src="game.js"></script>

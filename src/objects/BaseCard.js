@@ -9,7 +9,8 @@ BaseCard = function(game, x, y, cardBack, cardFront) {
         cardBack      : cardBack,
         currentFace   : "back",
         isFlipping    : false,
-        flipSpeed     : 500 // Time in ms, split between shrink and expand tween
+        flipSpeed     : 500, // Time in ms, split between shrink and expand tween,
+        gmPointer     : null
     };
 
     // Setup debugger
@@ -70,6 +71,8 @@ BaseCard.prototype.flipToBack = function(_this, shrinkCallback, expandCallback) 
             expandCallback.call();
             _this.props.isFlipping = false;
             _this.props.currentFace = "back";
+            gameManager[_this.props.gmPointer] = null;
+            _this.props.gmPointer = null;
             gameManager.cardsSelected--;
         });
     });
@@ -111,6 +114,13 @@ BaseCard.prototype.flipToFront = function(_this, shrinkCallback, expandCallback)
         expandTween.onComplete.add(function() {
             _this.props.isFlipping = false;
             _this.props.currentFace = "front";
+            if (gameManager.cardOne === null) {
+                gameManager.cardOne = _this;
+                gmPointer = "cardOne";
+            } else {
+                gameManager.cardTwo = _this;
+                gmPointer = "cardTwo";
+            }
         });
     });
 }
