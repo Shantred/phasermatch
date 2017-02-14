@@ -1,3 +1,8 @@
+// Boolean debug vars use for debugging the game from all states
+var debug = {
+    cardAnims : false,
+};
+
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create });
 
 function preload() {
@@ -14,14 +19,9 @@ var doFlip = false;
 function create() {
 
     //  This simply creates a sprite using the mushroom image we loaded above and positions it at 200 x 200
-    card = game.add.sprite(150, 150, 'kingcardback');
-    card.inputEnabled = true;
-    card.events.onInputDown.add(flipCard, this);
-    card.anchor.setTo(0.5, 0.5);
-    card.scaleXOriginal = card.scale.x;
-
-    card.face = 'back';
-    card.flipping = false;
+    //card = game.add.sprite(150, 150, 'kingcardback');
+    card = new BaseCard(game, 150, 150, 'kingcardback', 'kingcard');
+    //card.events.onInputDown.add(flipCard, this);
 
 }
 
