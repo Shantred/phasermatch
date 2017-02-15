@@ -44,7 +44,7 @@ When the cards are being shuffled prior to being added to the board, show all th
 level 1: 2x5 - 10
 level 2: 3x6 - 18 + 4 pairs
 level 3: 4x7 - 28 + 5 pairs
-level 4: 5x9 - 40 + 6 pairs
+level 4: 5x8 - 40 + 6 pairs
 level 5: 6x9 - 54 + 7 pairs
 level 6: 8x8 - 64 + 5 pairs
 Levle 7: 8x10 - 80 + 8 pairs

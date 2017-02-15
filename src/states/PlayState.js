@@ -6,7 +6,7 @@ PlayState.prototype = Object.create(Phaser.State.prototype);
 PlayState.prototype.constructor = PlayState;
 PlayState.prototype.create = function() {
 
-    PlayState.prototype.createCards(3);
+    PlayState.prototype.createCards(4);
 };
 
 PlayState.prototype.update = function() {
@@ -28,49 +28,49 @@ PlayState.prototype.createCards = function(level) {
 
     // Level data
     var levelData = {
-        "1" : {
-            normalCards: 10,
+        "1" : { // 2x5
+            normalCards: 12,
             trapCards: 0,
             safeCards: 0,
             xScale: 1,
             yScale: 1,
         },
-        "2" : {
+        "2" : { // 3x6
             normalCards: 18,
             trapCards: 0,
             safeCards: 0,
-            xScale: 0.75,
-            yScale: 0.75,
+            xScale: 0.95,
+            yScale: 0.95,
         },
-        "3" : {
+        "3" : { // 4x7
             normalCards: 28,
             trapCards: 0,
             safeCards: 0,
-            xScale: 0.65,
-            yScale: 0.65,
+            xScale: 0.85,
+            yScale: 0.85,
         },
-        "4" : {
+        "4" : { // 5x8
             normalCards: 40,
             trapCards: 0,
             safeCards: 0,
-            xScale: 1,
-            yScale: 1,
+            xScale: 0.73,
+            yScale: 0.65,
         },
-        "5" : {
+        "5" : { // 6x9
             normalCards: 54,
             trapCards: 0,
             safeCards: 0,
             xScale: 1,
             yScale: 1,
         },
-        "6" : {
+        "6" : { // 8x8
             normalCards: 64,
             trapCards: 0,
             safeCards: 0,
             xScale: 1,
             yScale: 1,
         },
-        "7" : {
+        "7" : { // 8x10
             normalCards: 80,
             trapCards: 0,
             safeCards: 0,
@@ -79,7 +79,7 @@ PlayState.prototype.createCards = function(level) {
         },
     };
 
-    var posXBase = 125;
+    var posXBase = 175;
     var posYBase = 150 * levelData[level]["yScale"];
     var posX = posXBase;
     var posY = posYBase;
@@ -123,7 +123,7 @@ PlayState.prototype.createCards = function(level) {
     // Now go through all cards and create them with the first face from the shuffled facesArray
     for (var i = 0; i < maxCards; i++) {
         // Make sure the card fits on the screen width-wise.
-        if (posX + (widthBase * levelData[level]["xScale"]) >= 800) {
+        if (posX + (widthBase * levelData[level]["xScale"]) >= 1024) {
             posX = posXBase;
             posY += (heightBase * levelData[level]["yScale"]) + (25 * levelData[level]["yScale"]);
         }
