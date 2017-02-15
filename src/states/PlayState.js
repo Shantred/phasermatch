@@ -1,12 +1,12 @@
 PlayState = function() {
-    // TODO
+    this.cards = game.add.group();
 };
 
 PlayState.prototype = Object.create(Phaser.State.prototype);
 PlayState.prototype.constructor = PlayState;
 PlayState.prototype.create = function() {
 
-    PlayState.prototype.createCards(8);
+    PlayState.prototype.createCards(1);
 };
 
 PlayState.prototype.update = function() {
@@ -17,13 +17,74 @@ PlayState.prototype.update = function() {
     }
 };
 
-PlayState.prototype.createCards = function(number) {
-    var posXBase = 100;
+PlayState.prototype.createCards = function(level) {
+
+    // When creating cards, they must all fit on the screen in even rows. We need to be
+    // able to automatically calculate how many rows, starting positions, card scale,
+    // etc. 
+
+    // Our "endless" mode starts out with a 2x5 grid. This fits all cards at maximum scale
+    // neatly within the game window.
+
+    // Level data
+    var levelData = {
+        "1" : {
+            normalCards: 10,
+            trapCards: 0,
+            safeCards: 0,
+            xScale: 1,
+            yScale: 1,
+        },
+        "2" : {
+            normalCards: 18,
+            trapCards: 0,
+            safeCards: 0,
+            xScale: 1,
+            yScale: 1,
+        },
+        "3" : {
+            normalCards: 28,
+            trapCards: 0,
+            safeCards: 0,
+            xScale: 1,
+            yScale: 1,
+        },
+        "4" : {
+            normalCards: 40,
+            trapCards: 0,
+            safeCards: 0,
+            xScale: 1,
+            yScale: 1,
+        },
+        "5" : {
+            normalCards: 54,
+            trapCards: 0,
+            safeCards: 0,
+            xScale: 1,
+            yScale: 1,
+        },
+        "6" : {
+            normalCards: 64,
+            trapCards: 0,
+            safeCards: 0,
+            xScale: 1,
+            yScale: 1,
+        },
+        "7" : {
+            normalCards: 80,
+            trapCards: 0,
+            safeCards: 0,
+            xScale: 1,
+            yScale: 1,
+        },
+    };
+
+    var posXBase = 125;
     var posYBase = 150;
     var posX = posXBase;
     var posY = posYBase;
 
-    var maxCards = number;
+    var maxCards = levelData[level]["normalCards"];
 
     // Cards need to be created in pairs with unique faces
     // To do this, create an array containing all the possible sprite indexes for our faces
@@ -51,7 +112,7 @@ PlayState.prototype.createCards = function(number) {
     // Now go through all cards and create them with the first face from the shuffled facesArray
     for (var i = 0; i < maxCards; i++) {
         // Make sure the card fits on the screen width-wise. Cards are 131 pixels wide
-        if (posX + 131 >= 800 - 131) {
+        if (posX + 131 >= 800) {
             posX = posXBase;
             posY += 192 + 50;
         }

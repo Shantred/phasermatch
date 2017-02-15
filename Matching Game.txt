@@ -1,0 +1,50 @@
+Match Game
+
+Feed glutton by matching cards
+
+each stage has a set time to be completed, which puts the player at a handicap. The general timing being about 2 sconds per match.
+
+matches may be chained together (within a determined period of time) to provide bonus time.
+
+at the end of the stage, remaining time will be used to calculate score.
+
+each level's maximum score should be calculable and not provide much randomness outside of card shuffling
+
+there are special trap cards in each stage that do things such as swapping card positions or disabling cards for a period of time
+
+trap cards apply their effect towards the matched card and are not required to be matched with another trap card. this means that a play may choose to strategically use these if the trap card is turned over first. 
+
+If two trap cards are matched together, the remaining unmatched cards are shuffled around the board.
+
+any trap cards unflipped or disabled will provide bonus score at the end of the stage. 
+
+As a foil to the trap cards, there are also safety cards. Safety cards negate traps but do nothing when matched with regular cards.
+
+safety cards may either disable or save the player from the trap card. A disable prevents the trap card from being flipped over again, whereas a save just disables itself and flips the trap back over.
+
+At set intervals, the glutton will ask for a specific match(chosen randomly from the remaining matches). Finding the desired match within a given period of time will result in bonus score.
+
+failing to complet a stage will allow you to try again, but shuffles the remaining cards and provides much less time and does not provide chain bonuses. This may only be available in specific modes.
+
+the game will have an arcade mode that presents specific challenges in a linear format (a-la candy crush) and an endless mode that allows the player to solve stages until they run out of retries or until they give up.
+
+in endless mode, the player starts with more time and has additional time added to their total for completion of each stage. The time awarded should be meager enough to require the player to play intelligently and create match chains for bonus time. 
+
+Endless mode starts out with a small-ish grid and increases in size up to a maximum of 8x8. The number of trap/safety cards increases gradually as the size of the grid does.
+
+Some endless mode trap ideas:
+shift cards in a direction
+disable rows or columns
+swap random cards
+refresh traps
+
+Cool ideas:
+When the cards are being shuffled prior to being added to the board, show all the cards that will be played so the user has a chance(if they pay enough attention) to anticipate the trap/safety cards available and the quantity.
+
+level 1: 2x5 - 10
+level 2: 3x6 - 18 + 4 pairs
+level 3: 4x7 - 28 + 5 pairs
+level 4: 5x9 - 40 + 6 pairs
+level 5: 6x9 - 54 + 7 pairs
+level 6: 8x8 - 64 + 5 pairs
+Levle 7: 8x10 - 80 + 8 pairs
