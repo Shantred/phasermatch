@@ -4,6 +4,7 @@ GameManager = function() {
     this.cardOne = null;
     this.cardTwo = null;
     this.checkingMatch = false;
+    this.cardsFlipping = 0;
 
     this.checkMatches = function() {
         this.checkingMatch = true;

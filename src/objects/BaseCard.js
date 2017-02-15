@@ -29,7 +29,7 @@ BaseCard.prototype.constructor = BaseCard;
 BaseCard.prototype.flip = function(card) {
 
     // For the base card, simply execute the flip animation
-    if (!card.props.isFlipping && card.props.isInteractable) {
+    if (!card.props.isFlipping && card.props.isInteractable && gameManager.cardsFlipping < 2) {
         card.debug.log("cardAnims", "flip", "Beginning flip: ", card);
 
         // For the flip animation, shrink the scale of x until 0, switch the sprite texture
@@ -45,6 +45,7 @@ BaseCard.prototype.flip = function(card) {
 BaseCard.prototype.flipToBack = function(_this, shrinkCallback, expandCallback) {
     // When flipping front-back we need to remove the child sprites once the
     // scaling has gone to 0
+    gameManager.cardsFlipping++;
     _this.props.isFlipping = true;
     var shrinkTween = game.add.tween(_this.scale).to(
         {x : 0},
@@ -70,6 +71,7 @@ BaseCard.prototype.flipToBack = function(_this, shrinkCallback, expandCallback) 
         // When done, allow flipping again and set face to correct state
         expandTween.onComplete.add(function() {
             expandCallback.call();
+            gameManager.cardsFlipping--;
             _this.props.isFlipping = false;
             _this.props.currentFace = "back";
             gameManager[_this.props.gmPointer] = null;
@@ -83,6 +85,7 @@ BaseCard.prototype.flipToFront = function(_this, shrinkCallback, expandCallback)
     if (gameManager.cardsSelected >= 2)
         return;
 
+    gameManager.cardsFlipping++;
     gameManager.cardsSelected++;
     _this.debug.log("cardAnims", "flipToFront", "Pre-tween context: ", _this);
 
@@ -113,6 +116,7 @@ BaseCard.prototype.flipToFront = function(_this, shrinkCallback, expandCallback)
 
         // When done, allow flipping again and set face to correct state
         expandTween.onComplete.add(function() {
+            gameManager.cardsFlipping--;
             _this.props.isFlipping = false;
             _this.props.currentFace = "front";
             if (gameManager.cardOne === null) {
