@@ -6,7 +6,7 @@ PlayState.prototype = Object.create(Phaser.State.prototype);
 PlayState.prototype.constructor = PlayState;
 PlayState.prototype.create = function() {
 
-    PlayState.prototype.createCards(2);
+    PlayState.prototype.createCards(3);
 };
 
 PlayState.prototype.update = function() {
@@ -46,8 +46,8 @@ PlayState.prototype.createCards = function(level) {
             normalCards: 28,
             trapCards: 0,
             safeCards: 0,
-            xScale: 1,
-            yScale: 1,
+            xScale: 0.65,
+            yScale: 0.65,
         },
         "4" : {
             normalCards: 40,
@@ -80,7 +80,7 @@ PlayState.prototype.createCards = function(level) {
     };
 
     var posXBase = 125;
-    var posYBase = 150;
+    var posYBase = 150 * levelData[level]["yScale"];
     var posX = posXBase;
     var posY = posYBase;
     var widthBase = 131;
