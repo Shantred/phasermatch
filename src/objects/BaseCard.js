@@ -28,6 +28,11 @@ BaseCard.prototype = Object.create(Phaser.Sprite.prototype);
 BaseCard.prototype.constructor = BaseCard;
 BaseCard.prototype.flip = function(card) {
 
+    // card.debug.toggleOverride();
+    // card.debug.log(null, "flip","Game Manager before flipping: ", gameManager);
+    // card.debug.log(null, "flip", "Card before flipping: ", card);
+    // card.debug.toggleOverride();
+
     // For the base card, simply execute the flip animation
     if (!card.props.isFlipping && card.props.isInteractable && gameManager.cardsFlipping < 2) {
         card.debug.log("cardAnims", "flip", "Beginning flip: ", card);
@@ -121,10 +126,10 @@ BaseCard.prototype.flipToFront = function(_this, shrinkCallback, expandCallback)
             _this.props.currentFace = "front";
             if (gameManager.cardOne === null) {
                 gameManager.cardOne = _this;
-                gmPointer = "cardOne";
+                _this.props.gmPointer = "cardOne";
             } else {
                 gameManager.cardTwo = _this;
-                gmPointer = "cardTwo";
+                _this.props.gmPointer = "cardTwo";
             }
         });
     });

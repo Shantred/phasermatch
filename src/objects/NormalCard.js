@@ -23,7 +23,7 @@ NormalCard = function(game, x, y, cardBack, cardFront, veggieIndex) {
     this.flipToFront = function() {
         var _this = this;
         BaseCard.prototype.flipToFront(this, function() {
-            _this.addChild(game.make.sprite(0,0, 'veggies', 17));
+            _this.addChild(game.make.sprite(0,0, 'veggies', _this.props.veggieIndex));
         }, function() {
             // 
         })

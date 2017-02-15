@@ -6,6 +6,11 @@ GameManager = function() {
     this.checkingMatch = false;
     this.cardsFlipping = 0;
 
+    this.debug = new Debugger();
+    this.debug.addOptions({
+        misc: true
+    });
+
     this.checkMatches = function() {
         this.checkingMatch = true;
         if (this.cardOne.identifier == this.cardTwo.identifier) {
@@ -22,7 +27,10 @@ GameManager = function() {
                 });
             });
         } else {
-          this.checkingMatches = false;
+          // When failing to find a match, flip both cards back over
+          this.cardOne.flip();
+          this.cardTwo.flip();
+          this.checkingMatch = false;
         }
     }
 }
