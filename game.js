@@ -4,6 +4,8 @@ function preload() {
 
     game.load.image('kingcard', './assets/kingcard.png');
     game.load.image('kingcardback', './assets/kingcardback.png');
+    game.load.image('cardback', './assets/card-back-square.png');
+    game.load.image('card', './assets/card-square.png');
     game.load.spritesheet('veggies', './assets/fruitnveg64wh37.png', 64, 64, 37);
 
     game.state.add('play', PlayState);

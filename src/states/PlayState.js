@@ -6,7 +6,7 @@ PlayState.prototype = Object.create(Phaser.State.prototype);
 PlayState.prototype.constructor = PlayState;
 PlayState.prototype.create = function() {
 
-    PlayState.prototype.createCards(4);
+    PlayState.prototype.createCards(1);
 };
 
 PlayState.prototype.update = function() {
@@ -32,8 +32,8 @@ PlayState.prototype.createCards = function(level) {
             normalCards: 12,
             trapCards: 0,
             safeCards: 0,
-            xScale: 1,
-            yScale: 1,
+            xScale: 0.5,
+            yScale: 0.5,
         },
         "2" : { // 3x6
             normalCards: 18,
@@ -83,8 +83,8 @@ PlayState.prototype.createCards = function(level) {
     var posYBase = 150 * levelData[level]["yScale"];
     var posX = posXBase;
     var posY = posYBase;
-    var widthBase = 131;
-    var heightBase = 192;
+    var widthBase = 500;
+    var heightBase = 500;
 
     var maxCards = levelData[level]["normalCards"];
 
@@ -131,7 +131,7 @@ PlayState.prototype.createCards = function(level) {
         // Grab a random face from the remaining choices
         var faceIndex = Math.floor((Math.random() * facesArray.length) + 1);
 
-        var card = new NormalCard(game, posX, posY, 'kingcardback', 'kingcard', facesArray.pop());
+        var card = new NormalCard(game, posX, posY, 'cardback', 'card', facesArray.pop());
         
         // Update scale to fit screen
         card.scale.setTo(levelData[level]["xScale"], levelData[level]["yScale"]);
